@@ -26,7 +26,7 @@ export default function CartItem({
             <p>{rating} ★ ★ ★ ★</p>
           </div>
         </div>
-        <div className="text-center">${price}</div>
+        <div className="text-center">Nrs.{price}</div>
         <div className="flex items-center justify-center">
           <button
             className="border-gray-300 h-10 w-10  m-2 p-2 shadow-md bg-violet-300"
@@ -44,7 +44,7 @@ export default function CartItem({
             +
           </button>
         </div>
-        <div className="text-center">${(quantity * price).toFixed(2)}</div>
+        <div className="text-center">Nrs.{(quantity * price).toFixed(2)}</div>
       </div>
       <hr className="m-4" />
     </>

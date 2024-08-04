@@ -32,7 +32,7 @@ export default function Cart() {
       </div>
 
       <div className="text-end font-bold text-3xl my-4 mr-8">
-        Total: $
+        Total: Nrs.
         {cartItems
           .reduce(
             (accumulator, currentItem) =>
