@@ -12,7 +12,6 @@ const slice = createSlice({
   initialState: [],
   reducers: {
     addCartItem(state, action) {
-      console.log(state);
       const existingCartItemIndex = findItemIndex(state, action);
       if (existingCartItemIndex !== -1) {
         state[existingCartItemIndex].quantity += 1;

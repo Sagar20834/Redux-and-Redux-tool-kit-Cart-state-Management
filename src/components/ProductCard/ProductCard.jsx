@@ -2,6 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { addCartItem } from "../../store/slices/CartSlice";
 import { useDispatch } from "react-redux";
+import { addWishListItem } from "../../store/slices/WishListSlice";
 
 const ProductCard = ({ productId, image, title, rating, price }) => {
   const dispatch = useDispatch();
@@ -24,7 +25,7 @@ const ProductCard = ({ productId, image, title, rating, price }) => {
         </div>
         <div className="price-rating-container">
           <p className="rating">{+rating} ★ ★ ★ ★</p>
-          <p className="price">${price}</p>
+          <p className="price">Nrs. {(price * 140).toFixed(2)}</p>
         </div>
         <div className="flex justify-around gap-1 flex-wrap mt-2">
           <button
@@ -35,7 +36,12 @@ const ProductCard = ({ productId, image, title, rating, price }) => {
           >
             Add to Cart
           </button>
-          <button className="rounded-md shadow-md bg-purple-400 p-2   shrink  mr-1">
+          <button
+            className="rounded-md shadow-md bg-purple-400 p-2   shrink  mr-1"
+            onClick={() => {
+              dispatch(addWishListItem({ productId }));
+            }}
+          >
             Add to Wishlist
           </button>
         </div>
