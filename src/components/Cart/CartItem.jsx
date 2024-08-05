@@ -2,6 +2,7 @@ import React from "react";
 import {
   decreaseCartItemQuantity,
   increaseCartItemQuantity,
+  removeCartItem,
 } from "../../store/slices/CartSlice";
 import { useDispatch } from "react-redux";
 
@@ -29,8 +30,8 @@ export default function CartItem({
         <div className="text-center">Nrs. {price}</div>
         <div className="flex items-center justify-center">
           <button
-            className="border-gray-300 h-10 w-10  m-2 p-2 shadow-md bg-violet-300"
-            onClick={() => dispatch(decreaseCartItemQuantity(productId))}
+            className="border-gray-300 h-10 w-10 rounded-md  m-2 p-2 shadow-md bg-violet-300"
+            onClick={() => dispatch(decreaseCartItemQuantity({ productId }))}
           >
             -
           </button>
@@ -38,13 +39,19 @@ export default function CartItem({
             {quantity}
           </span>
           <button
-            className="border-gray-300 h-10 w-10 m-2 p-2 shadow-md bg-violet-300"
-            onClick={() => dispatch(increaseCartItemQuantity(productId))}
+            className="border-gray-300 h-10 w-10 m-2 p-2 rounded-md shadow-md bg-violet-300"
+            onClick={() => dispatch(increaseCartItemQuantity({ productId }))}
           >
             +
           </button>
+          <button
+            className="border-gray-300 m-2 p-2 rounded-md shadow-md bg-violet-300"
+            onClick={() => dispatch(removeCartItem({ productId }))}
+          >
+            Remove
+          </button>
         </div>
-        <div className="text-center">Nrs.{(quantity * price).toFixed(2)}</div>
+        <div className="text-center">Nrs. {(quantity * price).toFixed(2)}</div>
       </div>
       <hr className="m-4" />
     </>

@@ -1,73 +1,51 @@
-// Action Types
-const CART_ADD_ITEM = "cart/addItem";
-const CART_REMOVE_ITEM = "cart/removeItem";
-const CART_ITEM_INCREASE_QUANTITY = "cart/increaseItemQuantity";
-const CART_ITEM_DECREASE_QUANTITY = "cart/decreaseItemQuantity";
-
-// Action Creators
-export function addCartItem(productData) {
-  return {
-    type: CART_ADD_ITEM,
-    payload: productData,
-  };
-}
-
-export function removeCartItem(productId) {
-  return { type: CART_REMOVE_ITEM, payload: { productId } };
-}
-
-export function decreaseCartItemQuantity(productId) {
-  return {
-    type: CART_ITEM_DECREASE_QUANTITY,
-    payload: { productId },
-  };
-}
-
-export function increaseCartItemQuantity(productId) {
-  return {
-    type: CART_ITEM_INCREASE_QUANTITY,
-    payload: { productId },
-  };
-}
+import { createSlice } from "@reduxjs/toolkit";
 
 // Reducer
-export default function cartReducer(state = [], action) {
-  switch (action.type) {
-    case CART_ADD_ITEM:
-      const existingCartItem = state.find(
-        (cartItem) => cartItem.productId === action.payload.productId
-      );
-      if (existingCartItem) {
-        return state.map((cartItem) => {
-          if (cartItem.productId === existingCartItem.productId) {
-            return { ...cartItem, quantity: cartItem.quantity + 1 };
-          }
-          return cartItem;
-        });
-      }
-      return [...state, { ...action.payload, quantity: 1 }];
-    case CART_REMOVE_ITEM:
-      return state.filter(
-        (cartItem) => cartItem.productId !== action.payload.productId
-      );
-    case CART_ITEM_INCREASE_QUANTITY:
-      return state.map((cartItem) => {
-        if (cartItem.productId === action.payload.productId) {
-          return { ...cartItem, quantity: cartItem.quantity + 1 };
-        }
-        return cartItem;
-      });
 
-    case CART_ITEM_DECREASE_QUANTITY:
-      return state
-        .map((cartItem) => {
-          if (cartItem.productId === action.payload.productId) {
-            return { ...cartItem, quantity: cartItem.quantity - 1 };
-          }
-          return cartItem;
-        })
-        .filter((cartItem) => cartItem.quantity > 0);
-    default:
-      return state;
-  }
-}
+// export default cartReducer;
+
+const findItemIndex = (state, action) =>
+  state.findIndex((item) => item.productId === action.payload.productId);
+
+const slice = createSlice({
+  name: "cart",
+  initialState: [],
+  reducers: {
+    addCartItem(state, action) {
+      console.log(state);
+      const existingCartItemIndex = findItemIndex(state, action);
+      if (existingCartItemIndex !== -1) {
+        state[existingCartItemIndex].quantity += 1;
+      } else {
+        state.push({ ...action.payload, quantity: 1 });
+      }
+    },
+    removeCartItem(state, action) {
+      const existingCartItemIndex = findItemIndex(state, action);
+      state.splice(existingCartItemIndex, 1);
+    },
+    increaseCartItemQuantity(state, action) {
+      const existingCartItemIndex = findItemIndex(state, action);
+      state[existingCartItemIndex].quantity += 1;
+    },
+    decreaseCartItemQuantity(state, action) {
+      const existingCartItemIndex = findItemIndex(state, action);
+      state[existingCartItemIndex].quantity -= 1;
+      if (state[existingCartItemIndex].quantity === 0) {
+        state.splice(existingCartItemIndex, 1);
+      }
+    },
+  },
+});
+
+export const {
+  addCartItem,
+  removeCartItem,
+  decreaseCartItemQuantity,
+  increaseCartItemQuantity,
+} = slice.actions;
+
+console.log(slice);
+
+const cartReducer = slice.reducer;
+export default cartReducer;

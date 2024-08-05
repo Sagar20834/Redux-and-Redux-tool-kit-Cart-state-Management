@@ -1,5 +1,7 @@
 import { productsList } from "../productsList";
 
-export default function productsReducer(state = productsList) {
+const productsReducer = (state = productsList) => {
   return state;
-}
+};
+
+export default productsReducer;

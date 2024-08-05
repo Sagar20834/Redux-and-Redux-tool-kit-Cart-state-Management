@@ -11,7 +11,7 @@ export function removeWishListItem(productId) {
 }
 
 // Reducer
-export default function wishListReducer(state = [], action) {
+const wishListReducer = (state = [], action) => {
   switch (action.type) {
     case WISHLIST_ADD_ITEM:
       return [...state, action.payload];
@@ -23,4 +23,6 @@ export default function wishListReducer(state = [], action) {
     default:
       return state;
   }
-}
+};
+
+export default wishListReducer;
